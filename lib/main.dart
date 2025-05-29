@@ -27,10 +27,24 @@ class RasterCoordsDemo extends StatelessWidget {
             // set the center by dividing
             // the height and width of your image by 2
             initialCenter: rc.pixelToLatLng(x: rc.width / 2, y: rc.height / 2),
+            cameraConstraint: CameraConstraint.containCenter(
+              bounds: rc.getMaxBounds(),
+            ),
           ),
           children: [
             TileLayer(
               urlTemplate: 'http://10.0.2.2:8080/map_tiles/{z}/{x}/{y}.png',
+            ),
+            MarkerLayer(
+              markers: [
+                Marker(
+                  // create a marker on the specified pixel coordinates
+                  point: rc.pixelToLatLng(x: 5232, y: 2524),
+                  width: 20,
+                  height: 20,
+                  child: FlutterLogo(),
+                ),
+              ],
             ),
           ],
         ),
