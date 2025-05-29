@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
-import 'package:latlong2/latlong.dart';
+import 'package:flutter_map_rastercoords/flutter_map_rastercoords.dart';
 
 void main() {
-  runApp(const RasterCoordsDemo());
+  runApp(RasterCoordsDemo());
 }
 
 class RasterCoordsDemo extends StatelessWidget {
-  const RasterCoordsDemo({super.key});
+  final rc = RasterCoords(width: 6143, height: 4600);
+  RasterCoordsDemo({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -16,12 +17,20 @@ class RasterCoordsDemo extends StatelessWidget {
         appBar: AppBar(title: const Text('Map View')),
         body: FlutterMap(
           options: MapOptions(
-            initialZoom: 5,
-            initialCenter: LatLng(11.3352855, 124.3544939),
+            // Coordinate reference system for non-geographical maps
+            // this also prevents the map from repeating or wrapping.
+            crs: CrsSimple(),
+            initialZoom: 1,
+            minZoom: 1,
+            // the calculated optimal zoom based on your image dimensions
+            maxZoom: rc.zoom,
+            // set the center by dividing
+            // the height and width of your image by 2
+            initialCenter: rc.pixelToLatLng(x: rc.width / 2, y: rc.height / 2),
           ),
           children: [
             TileLayer(
-              urlTemplate: 'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
+              urlTemplate: 'http://10.0.2.2:8080/map_tiles/{z}/{x}/{y}.png',
             ),
           ],
         ),
