@@ -16,7 +16,9 @@ class RasterCoordsDemo extends StatelessWidget {
       "http://10.0.2.2:8080/map_tiles/{z}/{x}/{y}.png";
 
   /// To ensure compatibility for running in localhost
-  /// on other platforms. You won't be needing this
+  /// on other platforms.
+  ///
+  /// Note that you might not be needing this
   /// if your map is already running on a remote server.
   String getMapUrl() {
     if (kIsWeb) {
