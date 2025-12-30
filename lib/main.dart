@@ -3,7 +3,8 @@ import 'package:flutter_map/flutter_map.dart';
 import 'package:flutter_map_rastercoords/flutter_map_rastercoords.dart';
 import 'package:flutter_map_rastercoords_example/local_server.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
   final LocalServer server = LocalServer();
   final Future<String> urlFuture = server.start();
   runApp(RasterCoordsDemo(urlFuture: urlFuture));
@@ -24,6 +25,15 @@ class RasterCoordsDemo extends StatelessWidget {
         body: FutureBuilder<String>(
           future: urlFuture,
           builder: (context, snapshot) {
+
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return const Center(child: CircularProgressIndicator());
+            }
+
+            if (snapshot.hasError) {
+              return Center(child: Text("Error: ${snapshot.error}"));
+            }
+
             return  FlutterMap(
               options: MapOptions(
                 // Coordinate reference system for non-geographical maps
