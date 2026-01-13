@@ -3,8 +3,6 @@
 > [!IMPORTANT]
 > This branch loads tile assets via internal server
 > The image is loaded then extracted in the assets folder.
-> Needs more testing on other platforms. Only tested on windows and android.
-
 
 Example of a non-geographical map application in [flutter_map](https://pub.dev/packages/flutter_map).
 
